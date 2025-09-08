@@ -68,44 +68,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="subscribe" className="py-20 px-6 bg-[#111C2E] text-center">
-        <h2 className="text-3xl font-bold mb-6">Become Part of the Myth</h2>
-        <p className="max-w-2xl mx-auto mb-8">
-          Our best tools are built with your feedback. Join our early access
-          list to test and influence the next generation of legendary tools.
-        </p>
-
-        <form
-          action="/api/subscribe"
-          method="post"
-          className="flex justify-center gap-0"
-        >
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            required
-            className="p-3 rounded-l-md text-black w-64"
-          />
-          <button
-            type="submit"
-            className="rounded-r-md bg-mythos-gold text-black px-6"
-          >
-            Join the Mythos
-          </button>
-        </form>
-      </section>
-
-      <section className="py-16 px-6 text-center bg-[#0D1B2A]">
-        <p className="text-xl italic mb-6">Ideas fade. Legends remain.</p>
-        <a
-          href="#subscribe"
-          className="inline-block px-6 py-3 rounded bg-mythos-gold text-black font-semibold"
-        >
-          Start Building with MythosPro
-        </a>
-      </section>
+      
     </Layout>
   );
 }
