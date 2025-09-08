@@ -2,25 +2,7 @@ import Layout from "../components/Layout";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import { useRouter } from "next/router";
-
-const PRODUCTS = [
-  {
-    title: "AI X Draft Reply",
-    desc: "Turn rough ideas into sharp replies in seconds.",
-    slug: "ai-x-draft-reply",
-    checkout: "https://yourstore.lemonsqueezy.com/checkout/buy/REPLACE_ID",
-  },
-  {
-    title: "Tool #2 (Coming Soon)",
-    desc: "Join early access to help shape what’s next.",
-    slug: "tool-2",
-  },
-  {
-    title: "Tool #3 (Coming Soon)",
-    desc: "The next chapter in the Mythos is yours to influence.",
-    slug: "tool-3",
-  },
-];
+import { PRODUCTS } from "../data/products";
 
 export default function Home() {
   const router = useRouter();

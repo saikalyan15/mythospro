@@ -1,24 +1,87 @@
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
+import Image from "next/image";
+import { PRODUCTS } from "../../data/products";
+
+function ProductMedia({ images = [], video }) {
+  return (
+    <div className="space-y-4">
+      {video && (
+        <video controls className="w-full rounded">
+          <source src={video} type="video/mp4" />
+        </video>
+      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {images.map((src) => (
+          <div key={src} className="rounded overflow-hidden bg-[#0B1220]">
+            <Image src={src} alt="product image" width={800} height={480} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Tool() {
   const router = useRouter();
   const { slug } = router.query;
+  const product = PRODUCTS.find((p) => p.slug === slug) || null;
 
-  // in a real app, fetch product by slug
+  if (!product) {
+    return (
+      <Layout>
+        <div className="max-w-4xl mx-auto py-24 px-6">Product not found</div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto py-24 px-6">
-        <h1 className="text-4xl font-bold mb-4">{slug}</h1>
-        <p className="text-lg mb-6">
-          This is the product detail page for <strong>{slug}</strong>. Add
-          description, screenshots, and a LemonSqueezy checkout button here.
-        </p>
-        <div className="flex gap-4">
-          <a href="/" className="px-4 py-2 rounded border border-gray-400">
-            Back
-          </a>
+      <div className="max-w-6xl mx-auto py-24 px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="md:col-span-2">
+          <div className="flex items-center gap-4 mb-4">
+            {product.logo && (
+              <div className="w-16 h-16 relative rounded overflow-hidden bg-[#07101A] flex-shrink-0">
+                <Image src={product.logo} alt={`${product.title} logo`} width={64} height={64} />
+              </div>
+            )}
+            <h1 className="text-4xl font-bold">{product.title}</h1>
+          </div>
+          <p className="text-lg mb-6">{product.longDesc}</p>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-3">Support</h2>
+            <p>
+              For help and questions contact:{" "}
+              <a href={product.supportUrl} className="underline">
+                Support
+              </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-3">Media</h2>
+            <ProductMedia images={product.images} video={product.video} />
+          </section>
         </div>
+
+        <aside className="md:col-span-1 p-6 bg-[#0C1A2B] rounded">
+          <div className="mb-4">
+            <div className="text-sm text-gray-300">Price</div>
+            <div className="text-2xl font-bold">{product.price || "—"}</div>
+          </div>
+          <a
+            href={product.checkout}
+            className="block text-center px-4 py-2 rounded bg-mythos-gold text-black font-semibold"
+          >
+            Buy / Get Access
+          </a>
+          <div className="mt-4 text-sm text-gray-400">
+            <a href="/" className="underline">
+              Back to tools
+            </a>
+          </div>
+        </aside>
       </div>
     </Layout>
   );
