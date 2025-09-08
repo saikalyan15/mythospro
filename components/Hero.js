@@ -14,12 +14,7 @@ export default function Hero({ onPrimary, onSecondary }) {
         >
           Explore Tools
         </button>
-        <button
-          onClick={onSecondary}
-          className="px-6 py-3 rounded-md border border-mythos-gold text-mythos-gold"
-        >
-          Join Early Access
-        </button>
+        {/* Join Early Access hidden for now */}
       </div>
     </section>
   );
