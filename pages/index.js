@@ -22,15 +22,16 @@ export default function Home() {
         <h2 className="text-3xl font-bold text-center mb-12">
           Tools That Shape Your Story
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-6 max-w-6xl mx-auto">
           {PRODUCTS.map((p) => (
-            <ProductCard
-              key={p.slug}
-              title={p.title}
-              desc={p.desc}
-              slug={p.slug}
-              checkoutUrl={p.checkout}
-            />
+            <div key={p.slug} className="w-full md:w-1/3 flex justify-center">
+              <ProductCard
+                title={p.title}
+                desc={p.desc}
+                slug={p.slug}
+                checkoutUrl={p.checkout}
+              />
+            </div>
           ))}
         </div>
       </section>
