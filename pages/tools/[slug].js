@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import Image from "next/image";
+import Link from "next/link";
 import { PRODUCTS } from "../../data/products";
 
 function ProductMedia({ images = [], video }) {
@@ -42,7 +43,12 @@ export default function Tool() {
           <div className="flex items-center gap-4 mb-4">
             {product.logo && (
               <div className="w-16 h-16 relative rounded overflow-hidden bg-[#07101A] flex-shrink-0">
-                <Image src={product.logo} alt={`${product.title} logo`} width={64} height={64} />
+                <Image
+                  src={product.logo}
+                  alt={`${product.title} logo`}
+                  width={64}
+                  height={64}
+                />
               </div>
             )}
             <h1 className="text-4xl font-bold">{product.title}</h1>
@@ -77,9 +83,9 @@ export default function Tool() {
             Buy / Get Access
           </a>
           <div className="mt-4 text-sm text-gray-400">
-            <a href="/" className="underline">
+            <Link href="/" className="underline">
               Back to tools
-            </a>
+            </Link>
           </div>
         </aside>
       </div>
