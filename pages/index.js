@@ -3,12 +3,16 @@ import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import { useRouter } from "next/router";
 import { PRODUCTS } from "../data/products";
+import Head from "next/head";
 
 export default function Home() {
   const router = useRouter();
 
   return (
     <Layout>
+      <Head>
+        <title>MythosPro — Home</title>
+      </Head>
       <Hero
         onPrimary={() => router.push("/#tools")}
         onSecondary={() => {
