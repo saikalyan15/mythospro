@@ -11,7 +11,7 @@ export const PRODUCTS = [
       "/products/ai-x-draft-reply/ai-x-2.png",
     ],
     video: "/products/ai-x-draft-reply/ai-x-demo.mp4",
-    supportUrl: "mailto:support@mythospro.com",
+    supportUrl: "mailto:aixdraftreply-support@mythospro.com",
     checkout: "https://yourstore.lemonsqueezy.com/checkout/buy/REPLACE_ID",
     layout: "generic",
   },
