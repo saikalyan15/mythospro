@@ -1,3 +1,4 @@
+/* stylelint-disable */
 export const PRODUCTS = [
   {
     title: "AI X Draft Reply",
@@ -6,6 +7,31 @@ export const PRODUCTS = [
     shortDesc: "Turn rough ideas into sharp replies in seconds.",
     longDesc:
       "AI X Draft Reply takes the selected tweet and gives you ideas and inspiration to reply to it.",
+    marketing: {
+      headline: "Your AI Co-Pilot for X",
+      subHeadline: "Write smarter, faster, and in the right tone — every time.",
+      subText:
+        "Stop second-guessing your tweets and replies. Our Chrome extension helps you craft posts that fit the moment — whether you need to be witty, professional, empathetic, or bold.",
+      howItWorks: [
+        {
+          title: "Choose Your Tone",
+          text: "From friendly to formal, sarcastic to supportive — pick from multiple tones that match your voice (or let AI suggest one).",
+        },
+        {
+          title: "Analyze Before You Reply",
+          text: "Drop a reply draft, and the extension will analyze it instantly: Is it too harsh? Too casual? Missing clarity? It gives you feedback and suggests an improved version in the tone you want.",
+        },
+        {
+          title: "One-Click Magic",
+          text: "Highlight, tweak, and send — without leaving X. The extension lives right inside the reply box, like a true co-pilot.",
+        },
+      ],
+      whyUseIt: [
+        "Save time — no more rewriting replies.",
+        "Stay on-brand — always hit the right tone.",
+        "Boost engagement — craft posts that resonate.",
+      ],
+    },
     images: [
       "/products/ai-x-draft-reply/ai-x-1.png",
       "/products/ai-x-draft-reply/ai-x-2.png",
