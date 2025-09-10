@@ -68,6 +68,14 @@ export default function Tool() {
           </div>
           <p className="text-lg mb-6">{product.longDesc}</p>
 
+          {product.marketing?.subText && (
+            <div className="mb-8">
+              <p className="text-base text-gray-300">
+                {product.marketing.subText}
+              </p>
+            </div>
+          )}
+
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-3">Support</h2>
             <p>
@@ -82,6 +90,31 @@ export default function Tool() {
             <h2 className="text-2xl font-semibold mb-3">Media</h2>
             <ProductMedia images={product.images} video={product.video} />
           </section>
+
+          {product.marketing?.howItWorks && (
+            <section className="mt-8">
+              <h2 className="text-2xl font-semibold mb-3">How It Works</h2>
+              <div className="space-y-4">
+                {product.marketing.howItWorks.map((item) => (
+                  <div key={item.title}>
+                    <div className="font-semibold">{item.title}</div>
+                    <div className="text-sm text-gray-300">{item.text}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {product.marketing?.whyUseIt && (
+            <section className="mt-8">
+              <h2 className="text-2xl font-semibold mb-3">Why Use It</h2>
+              <ul className="list-disc pl-5 text-gray-300">
+                {product.marketing.whyUseIt.map((b) => (
+                  <li key={b}>{b}</li>
+                ))}
+              </ul>
+            </section>
+          )}
         </div>
 
         <aside className="md:col-span-1 p-6 bg-[#0C1A2B] rounded">
