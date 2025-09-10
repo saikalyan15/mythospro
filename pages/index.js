@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import { useRouter } from "next/router";
-import { PRODUCTS } from "../data/products";
+import PRODUCTS from "../data/products.json";
 import Head from "next/head";
 
 export default function Home() {

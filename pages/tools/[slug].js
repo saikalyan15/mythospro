@@ -1,8 +1,9 @@
+/* stylelint-disable */
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
-import { PRODUCTS } from "../../data/products";
+import PRODUCTS from "../../data/products.json";
 
 function ProductMedia({ images = [], video }) {
   return (
@@ -51,7 +52,19 @@ export default function Tool() {
                 />
               </div>
             )}
-            <h1 className="text-4xl font-bold">{product.title}</h1>
+            <div>
+              <h1 className="text-4xl font-bold">{product.title}</h1>
+              {product.marketing?.headline && (
+                <div className="text-xl text-gray-200 mt-1">
+                  {product.marketing.headline}
+                </div>
+              )}
+              {product.marketing?.subHeadline && (
+                <div className="text-sm text-gray-400">
+                  {product.marketing.subHeadline}
+                </div>
+              )}
+            </div>
           </div>
           <p className="text-lg mb-6">{product.longDesc}</p>
 
