@@ -115,6 +115,26 @@ export default function Tool() {
               </ul>
             </section>
           )}
+
+          {product.marketing?.demoSteps && (
+            <section className="mt-8">
+              <h2 className="text-2xl font-semibold mb-3">
+                Step-by-Step Product Demo
+              </h2>
+              <ol className="list-decimal pl-5 space-y-4 text-gray-300">
+                {product.marketing.demoSteps.map((step, idx) => (
+                  <li key={step.title || idx}>
+                    <div className="font-semibold">{step.title}</div>
+                    {step.details?.map((d, i) => (
+                      <div key={i} className="mt-1">
+                        {d}
+                      </div>
+                    ))}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
         </div>
 
         <aside className="md:col-span-1 p-6 bg-[#0C1A2B] rounded">

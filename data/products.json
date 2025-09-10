@@ -28,6 +28,50 @@
         "Save time — no more rewriting replies.",
         "Stay on-brand — always hit the right tone.",
         "Boost engagement — craft posts that resonate."
+      ],
+      "demoSteps": [
+        {
+          "title": "Install the Extension",
+          "details": [
+            "Available on Chrome Web Store.",
+            "Once installed, the extension icon appears in the Chrome toolbar."
+          ]
+        },
+        {
+          "title": "Open X (Twitter)",
+          "details": [
+            "Navigate to X as usual.",
+            "The extension integrates directly into the reply box."
+          ]
+        },
+        {
+          "title": "Select a Tone",
+          "details": [
+            "The user clicks the extension icon or uses the shortcut (Ctrl+R).",
+            "A menu appears with multiple tones (e.g. Professional, Friendly, Sarcastic, Empathetic)."
+          ]
+        },
+        {
+          "title": "Analyze a Draft Reply",
+          "details": [
+            "When a user types a reply, the extension analyzes it for tone, clarity, and sentiment.",
+            "It identifies issues like: too harsh, too casual, not clear."
+          ]
+        },
+        {
+          "title": "Get AI Suggestions",
+          "details": [
+            "Based on the chosen tone, the extension suggests rewritten replies.",
+            "Example:\nOriginal reply: “This makes no sense.”\nProfessional tone: “Could you clarify what you mean?”\nFriendly tone: “I’m not sure I follow, can you explain?”"
+          ]
+        },
+        {
+          "title": "One-Click Insert",
+          "details": [
+            "The user selects the improved version.",
+            "With one click, it replaces their reply inside X’s reply box."
+          ]
+        }
       ]
     },
     "images": [
