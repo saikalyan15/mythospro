@@ -1,0 +1,4 @@
+# Ignore Next.js pages to avoid stylelint parsing JS files
+pages/**
+
+

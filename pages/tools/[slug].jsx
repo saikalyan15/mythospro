@@ -1,5 +1,4 @@
 /* stylelint-disable */
-import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,11 +23,7 @@ function ProductMedia({ images = [], video }) {
   );
 }
 
-export default function Tool() {
-  const router = useRouter();
-  const { slug } = router.query;
-  const product = PRODUCTS.find((p) => p.slug === slug) || null;
-
+export default function Tool({ product }) {
   if (!product) {
     return (
       <Layout>
@@ -157,4 +152,14 @@ export default function Tool() {
       </div>
     </Layout>
   );
+}
+
+export async function getStaticPaths() {
+  const paths = PRODUCTS.map((p) => ({ params: { slug: p.slug } }));
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  const product = PRODUCTS.find((p) => p.slug === params.slug) || null;
+  return { props: { product } };
 }
