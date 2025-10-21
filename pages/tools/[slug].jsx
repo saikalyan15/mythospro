@@ -59,6 +59,17 @@ export default function Tool({ product }) {
           mode,
         }),
       });
+      if (res.status === 409) {
+        if (!email) return alert('You already have an active subscription. Enter your email to open the billing portal.');
+        const pr = await fetch("https://api.mythospro.com/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, product_slug: product.slug, mode: 'portal' }),
+        });
+        if (!pr.ok) throw new Error(`Portal open failed (${pr.status})`);
+        const pd = await pr.json();
+        if (pd?.url) { window.location.href = pd.url; return; }
+      }
       if (!res.ok) throw new Error(`Checkout failed (${res.status})`);
       const data = await res.json();
       if (data?.url) {
@@ -190,6 +201,9 @@ export default function Tool({ product }) {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 rounded bg-[#0B1220] border border-[#1a2a3d] text-white placeholder-gray-500"
             />
+            <p className="text-xs text-gray-400">
+              Tip: Use the same email as in the extension for faster entitlement sync.
+            </p>
             <button
               onClick={() => startCheckout('checkout')}
               disabled={loading}
