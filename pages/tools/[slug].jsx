@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
 import PRODUCTS from "../../data/products.json";
+import { useState } from "react";
 
 function ProductMedia({ images = [], video }) {
   return (
@@ -30,6 +31,34 @@ export default function Tool({ product }) {
         <div className="max-w-4xl mx-auto py-24 px-6">Product not found</div>
       </Layout>
     );
+  }
+
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function startCheckout(mode = "checkout") {
+    try {
+      setLoading(true);
+      const res = await fetch("https://api.mythospro.com/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email || undefined,
+          product_slug: product.slug,
+          plan_slug: "pro-monthly",
+          mode,
+        }),
+      });
+      if (!res.ok) throw new Error(`Checkout failed (${res.status})`);
+      const data = await res.json();
+      if (data?.url) {
+        window.location.href = data.url;
+      }
+    } catch (e) {
+      alert(e.message || "Unable to start checkout");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -137,12 +166,32 @@ export default function Tool({ product }) {
             <div className="text-sm text-gray-300">Price</div>
             <div className="text-2xl font-bold">{product.price || "—"}</div>
           </div>
-          <a
-            href={product.checkout}
-            className="block text-center px-4 py-2 rounded bg-mythos-gold text-black font-semibold"
-          >
-            Buy / Get Access
-          </a>
+          <div className="space-y-3">
+            <input
+              type="email"
+              placeholder="you@example.com (optional)"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 rounded bg-[#0B1220] border border-[#1a2a3d] text-white placeholder-gray-500"
+            />
+            <button
+              onClick={() => startCheckout('checkout')}
+              disabled={loading}
+              className="w-full text-center px-4 py-2 rounded bg-mythos-gold text-black font-semibold"
+            >
+              {loading ? 'Starting…' : 'Buy / Get Access'}
+            </button>
+            <button
+              onClick={() => {
+                if (!email) return alert('Enter your email to open the portal');
+                startCheckout('portal');
+              }}
+              disabled={loading}
+              className="w-full text-center px-4 py-2 rounded bg-[#19314a] text-white font-semibold"
+            >
+              Manage Billing
+            </button>
+          </div>
           <div className="mt-4 text-sm text-gray-400">
             <Link href="/" className="underline">
               Back to tools
