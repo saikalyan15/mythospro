@@ -33,7 +33,6 @@ export default function Home() {
                 title={p.title}
                 desc={p.desc}
                 slug={p.slug}
-                checkoutUrl={p.checkout}
               />
             </div>
           ))}

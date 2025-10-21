@@ -3,7 +3,8 @@ import Layout from "../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
 import PRODUCTS from "../../data/products.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 function ProductMedia({ images = [], video }) {
   return (
@@ -33,8 +34,17 @@ export default function Tool({ product }) {
     );
   }
 
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    const q = router?.query || {};
+    if (typeof q.success !== 'undefined') {
+      setSuccess(String(q.success) === '1');
+    }
+  }, [router?.query]);
 
   async function startCheckout(mode = "checkout") {
     try {
@@ -65,6 +75,12 @@ export default function Tool({ product }) {
     <Layout>
       <div className="max-w-6xl mx-auto py-24 px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-2">
+          {success && (
+            <div className="mb-6 p-4 rounded bg-green-800/50 border border-green-600 text-green-100">
+              <div className="font-semibold">Success!</div>
+              <div className="text-sm">Your purchase was successful. The extension will reflect your Pro status shortly.</div>
+            </div>
+          )}
           <div className="flex items-center gap-4 mb-4">
             {product.logo && (
               <div className="w-16 h-16 relative rounded overflow-hidden bg-[#07101A] flex-shrink-0">

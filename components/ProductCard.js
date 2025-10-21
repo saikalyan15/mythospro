@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function ProductCard({ title, desc, slug, price, checkoutUrl }) {
+export default function ProductCard({ title, desc, slug, price }) {
   return (
     <div className="bg-[#1B263B] p-6 rounded-lg shadow">
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
@@ -12,16 +12,6 @@ export default function ProductCard({ title, desc, slug, price, checkoutUrl }) {
         >
           Details
         </Link>
-        {checkoutUrl && (
-          <a
-            href={checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 rounded border border-mythos-gold text-mythos-gold"
-          >
-            Buy
-          </a>
-        )}
       </div>
     </div>
   );
