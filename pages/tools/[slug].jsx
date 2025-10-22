@@ -44,6 +44,9 @@ export default function Tool({ product }) {
     if (typeof q.success !== 'undefined') {
       setSuccess(String(q.success) === '1');
     }
+    if (q.email && !email) {
+      try { setEmail(String(q.email)); } catch {}
+    }
   }, [router?.query]);
 
   async function startCheckout(mode = "checkout") {
