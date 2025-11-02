@@ -23,19 +23,47 @@ async function getClient() {
 
 export async function GET(req) {
   const url = new URL(req.url);
-  const customerId = url.searchParams.get('customer_id');
+  let customerId = url.searchParams.get('customer_id');
+  const subscriptionId = url.searchParams.get('subscription_id');
   const sendEmailParam = url.searchParams.get('send_email');
   const sendEmail = sendEmailParam === '1' || sendEmailParam === 'true';
 
-  if (!customerId) {
+  if (!customerId && !subscriptionId) {
     return NextResponse.json(
-      { error: 'customer_id is required' },
+      { error: 'customer_id or subscription_id is required' },
       { status: 400 },
     );
   }
 
   try {
     const client = await getClient();
+
+    if (!customerId && subscriptionId) {
+      try {
+        const subscription = await client.subscriptions.retrieve(subscriptionId);
+        customerId =
+          subscription?.customer?.id ||
+          subscription?.customer_id ||
+          subscription?.customerId ||
+          subscription?.customer?.customer_id ||
+          subscription?.customer?.customerId ||
+          null;
+      } catch (err) {
+        console.error('failed to fetch subscription for portal', err);
+        return NextResponse.json(
+          { error: 'subscription_lookup_failed', message: err?.message || String(err) },
+          { status: 502 },
+        );
+      }
+    }
+
+    if (!customerId) {
+      return NextResponse.json(
+        { error: 'customer_not_found' },
+        { status: 404 },
+      );
+    }
+
     const session = await client.customers.customerPortal.create(customerId, {
       send_email: !!sendEmail,
     });
