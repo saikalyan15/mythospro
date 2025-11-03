@@ -3,14 +3,42 @@ import Layout from "../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
 import PRODUCTS from "../../data/products.json";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 function ProductMedia({ images = [], video }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!video || !el) return;
+
+    const handleCanSeek = () => {
+      try {
+        // Jump slightly into the video to give a richer preview frame.
+        el.currentTime = Math.min(2, el.duration || 2);
+        el.pause();
+      } catch {
+        /* no-op */
+      }
+    };
+
+    // If metadata is ready, seeking is immediately possible.
+    if (el.readyState >= 1) {
+      handleCanSeek();
+    } else {
+      el.addEventListener("loadedmetadata", handleCanSeek, { once: true });
+    }
+
+    return () => {
+      el.removeEventListener("loadedmetadata", handleCanSeek);
+    };
+  }, [video]);
+
   return (
     <div className="space-y-4">
       {video && (
-        <video controls className="w-full rounded">
+        <video ref={videoRef} controls className="w-full rounded" preload="metadata">
           <source src={video} type="video/mp4" />
         </video>
       )}
