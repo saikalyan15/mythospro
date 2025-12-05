@@ -1,54 +1,55 @@
 /* stylelint-disable */
-import Layout from "../../components/Layout";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo } from "react";
+import Layout from "../../components/Layout";
 import PRODUCTS from "../../data/products.json";
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
 
-function ProductMedia({ images = [], video }) {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!video || !el) return;
-
-    const handleCanSeek = () => {
-      try {
-        // Jump slightly into the video to give a richer preview frame.
-        el.currentTime = Math.min(2, el.duration || 2);
-        el.pause();
-      } catch {
-        /* no-op */
-      }
-    };
-
-    // If metadata is ready, seeking is immediately possible.
-    if (el.readyState >= 1) {
-      handleCanSeek();
-    } else {
-      el.addEventListener("loadedmetadata", handleCanSeek, { once: true });
-    }
-
-    return () => {
-      el.removeEventListener("loadedmetadata", handleCanSeek);
-    };
-  }, [video]);
-
+function MediaBlock({ images = [], video }) {
   return (
-    <div className="space-y-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {video && (
-        <video ref={videoRef} controls className="w-full rounded" preload="metadata">
-          <source src={video} type="video/mp4" />
-        </video>
+        <div className="bg-[#0B1220] rounded-xl overflow-hidden border border-[#1a2a3d] shadow-lg">
+          <video
+            controls
+            playsInline
+            className="w-full h-full object-cover"
+            poster={images?.[0]}
+            preload="metadata"
+          >
+            <source src={video} type="video/mp4" />
+          </video>
+        </div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {images.map((src) => (
-          <div key={src} className="rounded overflow-hidden bg-[#0B1220]">
-            <Image src={src} alt="product image" width={800} height={480} />
+          <div
+            key={src}
+            className="bg-[#0B1220] rounded-xl overflow-hidden border border-[#1a2a3d] shadow"
+          >
+            <Image
+              src={src}
+              alt="AI X Draft Reply screenshot"
+              width={800}
+              height={480}
+              className="w-full h-full object-cover"
+            />
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+function Feature({ title, desc, badge }) {
+  return (
+    <div className="p-4 rounded-lg bg-[#0B1220] border border-[#1a2a3d] shadow-sm">
+      <div className="flex items-center gap-2 mb-2">
+        <div className="text-xs uppercase tracking-wide text-gray-400">{badge}</div>
+      </div>
+      <h3 className="font-semibold text-lg">{title}</h3>
+      <p className="text-sm text-gray-300 mt-2">{desc}</p>
     </div>
   );
 }
@@ -62,203 +63,279 @@ export default function Tool({ product }) {
     );
   }
 
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const heroHeadline = useMemo(
+    () => "Craft perfect X replies in seconds. Keep it forever.",
+    []
+  );
+  const heroSub = useMemo(
+    () =>
+      "AI x Draft Reply is your co-pilot for Twitter/X. Save time, stay on-brand, and own a lifetime license. You bring your OpenAI key so your data stays yours.",
+    []
+  );
 
-  useEffect(() => {
-    const q = router?.query || {};
-    if (typeof q.success !== 'undefined') {
-      setSuccess(String(q.success) === '1');
-    }
-    if (q.email && !email) {
-      try { setEmail(String(q.email)); } catch {}
-    }
-  }, [router?.query]);
+  const problemPoints = [
+    "Staring at the blank reply box when the conversation is moving fast.",
+    "Overthinking tone and wording—worried you’ll sound off-brand or harsh.",
+    "Missing engagement because crafting the right reply takes too long.",
+    "Repetitive responses that don’t sound like you.",
+  ];
 
-  async function startCheckout(mode = "checkout") {
-    try {
-      setLoading(true);
-      const res = await fetch("https://api.mythospro.com/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email || undefined,
-          product_slug: product.slug,
-          plan_slug: "pro-monthly",
-          mode,
-        }),
-      });
-      if (res.status === 409) {
-        if (!email) return alert('You already have an active subscription. Enter your email to open the billing portal.');
-        const pr = await fetch("https://api.mythospro.com/api/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, product_slug: product.slug, mode: 'portal' }),
-        });
-        if (!pr.ok) throw new Error(`Portal open failed (${pr.status})`);
-        const pd = await pr.json();
-        if (pd?.url) { window.location.href = pd.url; return; }
-      }
-      if (!res.ok) throw new Error(`Checkout failed (${res.status})`);
-      const data = await res.json();
-      if (data?.url) {
-        window.location.href = data.url;
-      }
-    } catch (e) {
-      alert(e.message || "Unable to start checkout");
-    } finally {
-      setLoading(false);
-    }
-  }
+  const solutionPoints = [
+    "Instant AI drafts that match your tone and keep replies under 280 characters.",
+    "Multiple options on-demand—pick, tweak, and post.",
+    "Context-aware suggestions that read the thread before drafting.",
+    "One-time license with BYOK: your key stays local, no surprise subscriptions.",
+  ];
+
+  const featureCards = [
+    {
+      title: "Tone-aware drafting",
+      desc: "Pick the tone you want (from quick to thoughtful) and get replies that sound like you—not a bot.",
+      badge: "Voice",
+    },
+    {
+      title: "One-click suggestions",
+      desc: "Highlight, generate, and insert without leaving X. Multiple drafts appear instantly so you can ship fast.",
+      badge: "Speed",
+    },
+    {
+      title: "Understands the thread",
+      desc: "Pulls context from the tweet so suggestions stay relevant and avoid missing the point.",
+      badge: "Context",
+    },
+    {
+      title: "Privacy-first BYOK",
+      desc: "Store your OpenAI key locally. Drafts are generated directly via your key—no MythosPro servers in the middle.",
+      badge: "Trust",
+    },
+    {
+      title: "Set it and keep it",
+      desc: "One-time license for the extension. Updates are included, and you control model choice and cost.",
+      badge: "Lifetime",
+    },
+  ];
+
+  const faq = [
+    {
+      q: "Is this a subscription?",
+      a: "No. AI x Draft Reply is offered as a lifetime license. You pay once for the extension and use your own OpenAI billing for generations.",
+    },
+    {
+      q: "What does BYOK mean?",
+      a: "You add your OpenAI API key inside the extension. It’s stored locally and used directly with OpenAI—your data does not route through MythosPro servers.",
+    },
+    {
+      q: "Does it work on every reply box?",
+      a: "Yes. The extension lives in the X/Twitter reply UI so you can draft and insert without switching tabs.",
+    },
+    {
+      q: "Do I need technical setup?",
+      a: "No. Install from the Chrome Web Store, paste your API key, choose a model, and start drafting.",
+    },
+    {
+      q: "What if X changes something?",
+      a: "We ship updates with the lifetime license so the extension keeps working with X changes.",
+    },
+  ];
 
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto py-24 px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-2">
-          {success && (
-            <div className="mb-6 p-4 rounded bg-green-800/50 border border-green-600 text-green-100">
-              <div className="font-semibold">Success!</div>
-              <div className="text-sm">Your purchase was successful. The extension will reflect your Pro status shortly.</div>
+      <Head>
+        <title>{product.title} | MythosPro</title>
+        <meta
+          name="description"
+          content="AI x Draft Reply helps you craft on-brand Twitter/X replies in seconds with a lifetime license and BYOK privacy."
+        />
+      </Head>
+
+      <div className="max-w-6xl mx-auto px-6 py-16 space-y-20">
+        <header className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs">
+              <span className="font-semibold">Lifetime license</span>
+              <span className="h-4 w-[1px] bg-white/30" />
+              <span>BYOK privacy</span>
+              <span className="h-4 w-[1px] bg-white/30" />
+              <span>Chrome extension</span>
             </div>
-          )}
-          <div className="flex items-center gap-4 mb-4">
-            {product.logo && (
-              <div className="w-16 h-16 relative rounded overflow-hidden bg-[#07101A] flex-shrink-0">
-                <Image
-                  src={product.logo}
-                  alt={`${product.title} logo`}
-                  width={64}
-                  height={64}
-                />
-              </div>
-            )}
-            <div>
-              <h1 className="text-4xl font-bold">{product.title}</h1>
-              {product.marketing?.headline && (
-                <div className="text-xl text-gray-200 mt-1">
-                  {product.marketing.headline}
-                </div>
-              )}
-              {product.marketing?.subHeadline && (
-                <div className="text-sm text-gray-400">
-                  {product.marketing.subHeadline}
-                </div>
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+              {heroHeadline}
+            </h1>
+            <p className="text-lg text-gray-200">{heroSub}</p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="#buy"
+                className="px-6 py-3 rounded-md bg-mythos-gold text-black font-semibold"
+              >
+                Get lifetime access · $5.99
+              </Link>
+              <Link
+                href="#demo"
+                className="px-6 py-3 rounded-md border border-white/30 text-white font-semibold"
+              >
+                Watch the demo
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-3 text-sm text-gray-300">
+              {["Content creators", "Community managers", "Customer support", "Thought leaders"].map(
+                (label) => (
+                  <span
+                    key={label}
+                    className="px-3 py-1 rounded-full bg-white/5 border border-white/10"
+                  >
+                    {label}
+                  </span>
+                )
               )}
             </div>
           </div>
-          <p className="text-lg mb-6">{product.longDesc}</p>
+          <div className="lg:col-span-5">
+            <MediaBlock images={product.images || []} video={product.video} />
+          </div>
+        </header>
 
-          {product.marketing?.subText && (
-            <div className="mb-8">
-              <p className="text-base text-gray-300">
-                {product.marketing.subText}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="p-6 rounded-xl bg-[#0C1A2B] border border-[#1a2a3d] shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4">Before AI x Draft Reply</h2>
+            <ul className="space-y-3 text-gray-200">
+              {problemPoints.map((p) => (
+                <li key={p} className="flex gap-3">
+                  <span className="text-mythos-gold mt-1">•</span>
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="p-6 rounded-xl bg-[#0C1A2B] border border-[#1a2a3d] shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4">After AI x Draft Reply</h2>
+            <ul className="space-y-3 text-gray-200">
+              {solutionPoints.map((p) => (
+                <li key={p} className="flex gap-3">
+                  <span className="text-mythos-gold mt-1">•</span>
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section id="demo" className="space-y-6">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <h2 className="text-3xl font-semibold">See it in action</h2>
+            <span className="text-sm text-gray-400">
+              Real screenshots and demo from the extension
+            </span>
+          </div>
+          <MediaBlock images={product.images || []} video={product.video} />
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-3xl font-semibold">Why people use it</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {featureCards.map((f) => (
+              <Feature key={f.title} title={f.title} desc={f.desc} badge={f.badge} />
+            ))}
+          </div>
+        </section>
+
+        <section id="buy" className="p-6 rounded-xl bg-[#0B1220] border border-[#1a2a3d] shadow-lg space-y-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+              <h2 className="text-3xl font-semibold">Lifetime license, zero subscriptions</h2>
+              <p className="text-gray-300 mt-1">
+                Own the tool forever. Pay $5.99 once for the extension, use your own OpenAI key for generation costs, and get future updates included.
               </p>
             </div>
-          )}
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-3">Support</h2>
-            <p>
-              For help and questions contact:{" "}
-              <a href={product.supportUrl} className="underline">
-                Support
-              </a>
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-semibold mb-3">Media</h2>
-            <ProductMedia images={product.images} video={product.video} />
-          </section>
-
-          {product.marketing?.howItWorks && (
-            <section className="mt-8">
-              <h2 className="text-2xl font-semibold mb-3">How It Works</h2>
-              <div className="space-y-4">
-                {product.marketing.howItWorks.map((item) => (
-                  <div key={item.title}>
-                    <div className="font-semibold">{item.title}</div>
-                    <div className="text-sm text-gray-300">{item.text}</div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {product.marketing?.whyUseIt && (
-            <section className="mt-8">
-              <h2 className="text-2xl font-semibold mb-3">Why Use It</h2>
-              <ul className="list-disc pl-5 text-gray-300">
-                {product.marketing.whyUseIt.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          {product.marketing?.demoSteps && (
-            <section className="mt-8">
-              <h2 className="text-2xl font-semibold mb-3">
-                Step-by-Step Product Demo
-              </h2>
-              <ol className="list-decimal pl-5 space-y-4 text-gray-300">
-                {product.marketing.demoSteps.map((step, idx) => (
-                  <li key={step.title || idx}>
-                    <div className="font-semibold">{step.title}</div>
-                    {step.details?.map((d, i) => (
-                      <div key={i} className="mt-1">
-                        {d}
-                      </div>
-                    ))}
-                  </li>
-                ))}
-              </ol>
-            </section>
-          )}
-        </div>
-
-        <aside className="md:col-span-1 p-6 bg-[#0C1A2B] rounded">
-          <div className="mb-4">
-            <div className="text-sm text-gray-300">Price</div>
-            <div className="text-2xl font-bold">{product.price || "—"}</div>
-          </div>
-          <div className="space-y-3">
-            <input
-              type="email"
-              placeholder="you@example.com (optional)"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 rounded bg-[#0B1220] border border-[#1a2a3d] text-white placeholder-gray-500"
-            />
-            <p className="text-xs text-gray-400">
-              Tip: Use the same email as in the extension for faster entitlement sync.
-            </p>
-            <button
-              onClick={() => startCheckout('checkout')}
-              disabled={loading}
-              className="w-full text-center px-4 py-2 rounded bg-mythos-gold text-black font-semibold"
+            <Link
+              href="mailto:aixdraftreply-support@mythospro.com?subject=AI%20x%20Draft%20Reply%20Lifetime"
+              className="px-6 py-3 rounded-md bg-mythos-gold text-black font-semibold text-center"
             >
-              {loading ? 'Starting…' : 'Buy / Get Access'}
-            </button>
-            <button
-              onClick={() => {
-                if (!email) return alert('Enter your email to open the portal');
-                startCheckout('portal');
-              }}
-              disabled={loading}
-              className="w-full text-center px-4 py-2 rounded bg-[#19314a] text-white font-semibold"
-            >
-              Manage Billing
-            </button>
-          </div>
-          <div className="mt-4 text-sm text-gray-400">
-            <Link href="/" className="underline">
-              Back to tools
+              Claim lifetime access
             </Link>
           </div>
-        </aside>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-gray-300">
+            <div className="p-3 rounded-lg bg-[#0C1A2B] border border-[#1a2a3d]">
+              <div className="font-semibold">Own the tool</div>
+              <p>No recurring subscription or price hikes.</p>
+            </div>
+            <div className="p-3 rounded-lg bg-[#0C1A2B] border border-[#1a2a3d]">
+              <div className="font-semibold">BYOK control</div>
+              <p>Choose the OpenAI model that fits your budget and speed.</p>
+            </div>
+            <div className="p-3 rounded-lg bg-[#0C1A2B] border border-[#1a2a3d]">
+              <div className="font-semibold">Updates included</div>
+              <p>Lifetime updates to stay aligned with X changes.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-6">
+          <h2 className="text-3xl font-semibold">How it works</h2>
+          <ol className="space-y-4 text-gray-200">
+            <li>
+              <div className="font-semibold">Install the Chrome extension</div>
+              <div className="text-sm text-gray-300">
+                Add AI x Draft Reply to your browser. The icon lives in your toolbar and inside the reply box on X.
+              </div>
+            </li>
+            <li>
+              <div className="font-semibold">Add your OpenAI API key</div>
+              <div className="text-sm text-gray-300">
+                Paste your key once. It’s stored locally and used directly with OpenAI—no MythosPro servers in between.
+              </div>
+            </li>
+            <li>
+              <div className="font-semibold">Choose tone, generate, and post</div>
+              <div className="text-sm text-gray-300">
+                Pick a tone, generate multiple drafts, edit if needed, and insert with one click.
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-3xl font-semibold">FAQ</h2>
+          <div className="space-y-3">
+            {faq.map(({ q, a }) => (
+              <details
+                key={q}
+                className="p-4 rounded-lg bg-[#0B1220] border border-[#1a2a3d] text-gray-200"
+              >
+                <summary className="font-semibold cursor-pointer">{q}</summary>
+                <p className="mt-2 text-sm text-gray-300">{a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <section className="p-6 rounded-xl bg-[#0C1A2B] border border-[#1a2a3d] shadow-lg text-center space-y-3">
+          <h2 className="text-3xl font-semibold">
+            Reply faster. Sound sharper. Own it forever.
+          </h2>
+          <p className="text-gray-300">
+            Join creators and teams who keep conversations moving without staring at a blank box.
+          </p>
+          <div className="flex justify-center gap-3">
+            <Link
+              href="mailto:aixdraftreply-support@mythospro.com?subject=AI%20x%20Draft%20Reply%20Lifetime"
+              className="px-6 py-3 rounded-md bg-mythos-gold text-black font-semibold"
+            >
+              Get lifetime access
+            </Link>
+            <Link
+              href="#demo"
+              className="px-6 py-3 rounded-md border border-white/30 text-white font-semibold"
+            >
+              See the demo
+            </Link>
+          </div>
+        </section>
+
+        <div className="text-center text-sm text-gray-400">
+          <Link href="/" className="underline">
+            Back to tools
+          </Link>
+        </div>
       </div>
     </Layout>
   );

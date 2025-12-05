@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <Layout>
       <Head>
-        <title>MythosPro — Home</title>
+        <title>MythosPro - Home</title>
       </Head>
       <Hero
         onPrimary={() => router.push("/#tools")}
@@ -45,25 +45,25 @@ export default function Home() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto text-center">
           <div>
-            <h3 className="font-semibold mb-2">🛠️ Simple but powerful</h3>
+            <h3 className="font-semibold mb-2">Simple but powerful</h3>
             <p className="text-sm text-gray-300">
               Tools that do one thing, but do it exceptionally well.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold mb-2">⚡ Built for speed</h3>
+            <h3 className="font-semibold mb-2">Built for speed</h3>
             <p className="text-sm text-gray-300">
               Fast, focused, and lightweight for productivity.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold mb-2">🌍 Flexible across niches</h3>
+            <h3 className="font-semibold mb-2">Flexible across niches</h3>
             <p className="text-sm text-gray-300">
               Extensions and SaaS tools adaptable to many use cases.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold mb-2">🔒 Secure and reliable</h3>
+            <h3 className="font-semibold mb-2">Secure and reliable</h3>
             <p className="text-sm text-gray-300">
               Trusted solutions that protect your workflow and data.
             </p>

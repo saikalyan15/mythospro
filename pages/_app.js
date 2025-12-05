@@ -5,7 +5,7 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>MythosPro — Tools for creators</title>
+        <title>MythosPro - Tools for creators</title>
         <meta
           name="description"
           content="Productivity tools and extensions by MythosPro"

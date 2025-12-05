@@ -1,8 +1,17 @@
-# MythosPro — landing site (Next.js + Tailwind)
-This is a website of growing suite of micro-SaaS tools and Chrome extensions to empower creators, developers, and builders.
+# MythosPro landing site (Next.js + Tailwind)
+
+Marketing and configuration site for the MythosPro tools.
 
 ## Quickstart
 
-1. Install:
+1. Install dependencies:
    ```bash
    npm install
+   ```
+2. Run the dev server:
+   ```bash
+   npm run dev
+   ```
+
+## Notes
+- AI X Draft Reply sells a $5.99 lifetime license (handled by Dodo Payments) and runs in BYOK mode where users supply their own OpenAI API key and choose the model in the UI.

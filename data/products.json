@@ -4,12 +4,13 @@
     "slug": "ai-x-draft-reply",
     "logo": "/products/ai-x-draft-reply/logo.svg",
     "shortDesc": "Turn rough ideas into sharp replies in seconds.",
-    "desc": "Write smarter, faster, and in the right tone — every time.",
-    "longDesc": "AI X Draft Reply takes the selected tweet and gives you ideas and inspiration to reply to it.",
+    "desc": "Write smarter, faster, and in the right tone every time.",
+    "longDesc": "AI X Draft Reply now runs in BYOK mode. Bring your own OpenAI key, pick the model you want, and craft replies that fit your voice without any subscriptions.",
+    "price": "$5.99 lifetime (BYOK)",
     "marketing": {
-      "headline": "Your AI Co-Pilot for X",
-      "subHeadline": "Write smarter, faster, and in the right tone — every time.",
-      "subText": "Stop second-guessing your tweets and replies. Our Chrome extension helps you craft posts that fit the moment, whether you need to be witty, professional, empathetic, or bold.",
+      "headline": "Your AI co-pilot for X",
+      "subHeadline": "Write smarter, faster, and in the right tone every time.",
+      "subText": "Stop second-guessing your tweets and replies. The extension helps you craft posts that fit the moment, whether you need to be witty, professional, empathetic, or bold. Use your own OpenAI billing for full control.",
       "howItWorks": [
         {
           "title": "Choose Your Tone",
@@ -27,7 +28,8 @@
       "whyUseIt": [
         "Save time — no more rewriting replies.",
         "Stay on-brand — always hit the right tone.",
-        "Boost engagement — craft posts that resonate."
+        "Boost engagement — craft posts that resonate.",
+        "BYOK — keep control of cost and model choice."
       ],
       "demoSteps": [
         {
@@ -47,29 +49,32 @@
         {
           "title": "Select a Tone",
           "details": [
-            "The user clicks the extension icon or uses the shortcut (Ctrl+R).",
-            "A menu appears with multiple tones (e.g. Professional, Friendly, Sarcastic, Empathetic)."
+            "Click the extension icon or use the shortcut to open the tone menu.",
+            "Pick from multiple tones (e.g. Professional, Friendly, Sarcastic, Empathetic)."
           ]
         },
         {
           "title": "Analyze a Draft Reply",
           "details": [
-            "When a user types a reply, the extension analyzes it for tone, clarity, and sentiment.",
-            "It identifies issues like: too harsh, too casual, not clear."
+            "When you type a reply, the extension analyzes it for tone, clarity, and sentiment.",
+            "It flags issues like: too harsh, too casual, or unclear wording."
           ]
         },
         {
           "title": "Get AI Suggestions",
           "details": [
             "Based on the chosen tone, the extension suggests rewritten replies.",
-            "Example:\nOriginal reply: “This makes no sense.”\nProfessional tone: “Could you clarify what you mean?”\nFriendly tone: “I’m not sure I follow, can you explain?”"
+            "Example:",
+            "Original: \"This makes no sense.\"",
+            "Professional: \"Could you clarify what you mean?\"",
+            "Friendly: \"I am not sure I follow, can you explain?\""
           ]
         },
         {
           "title": "One-Click Insert",
           "details": [
-            "The user selects the improved version.",
-            "With one click, it replaces their reply inside X’s reply box."
+            "Select the improved version.",
+            "With one click, it replaces your reply inside X."
           ]
         }
       ]
