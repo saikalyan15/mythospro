@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mythos Pro — Focused software for professionals",
+  title: "Mythos Pro: Focused software for professionals",
   description:
     "Mythos Pro is an indie software studio building practical SaaS tools for professionals. Built by makers, not committees.",
 };

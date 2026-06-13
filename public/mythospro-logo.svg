@@ -1,0 +1,33 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1a1635"/>
+      <stop offset="1" stop-color="#060618"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="128" y1="160" x2="384" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Rounded square backdrop -->
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <rect x="1" y="1" width="510" height="510" rx="115" stroke="#818cf8" stroke-opacity="0.25" stroke-width="2" fill="none"/>
+
+  <!-- Mountain-peaks M -->
+  <path
+    d="M104 372L188 168L256 288L324 168L408 372"
+    stroke="url(#mark)"
+    stroke-width="34"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    filter="url(#glow)"
+  />
+</svg>

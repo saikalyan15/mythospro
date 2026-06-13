@@ -13,5 +13,10 @@ Marketing and configuration site for the MythosPro tools.
    npm run dev
    ```
 
-## Notes
-- AI X Draft Reply sells a $5.99 lifetime license (handled by Dodo Payments) and runs in BYOK mode where users supply their own OpenAI API key and choose the model in the UI.
+## Products
+- **EAA Scanner** ([eaascanner.com](https://eaascanner.com)), accessibility compliance SaaS for teams meeting EU Accessibility Act (EAA) and WCAG 2.2 standards.
+
+## Brand assets
+- `public/mythospro-logo.svg` / `.png`, 512×512 icon (gradient mountain-peaks "M")
+- `public/mythospro-wordmark.svg`, horizontal lockup
+- `app/icon.svg`, favicon (auto-served by Next.js App Router)
